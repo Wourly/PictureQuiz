@@ -1,17 +1,20 @@
 const db = [
-["Češky", "Latin", "Magyar"], /* SET LANGUAGES */
+["Česky", "Latin", "Magyar"], /* SET LANGUAGES */
     
 {
 
 item: "Begónie",
 
 rod: "Begónie",
+druh: "plesnivá",
 
 genus: "Begonia",
+specio: "kunda",
 
 madararar: "fuj",
+reriguerugiergegr: "nevim",
 
-src: `db/begonia.jpg`,
+src: `begonia.jpg`,
 from: ``
 
 },
@@ -25,7 +28,7 @@ genus: "Agave",
 
 MADARSKYKOKOTINY: "nevim",
 
-src: `db/agave.jpg`,
+src: `agave.jpg`,
 from: ``
     
 },
@@ -33,7 +36,7 @@ from: ``
 
 item: "Aloe",    
 
-trida: "Krtkovití",
+trida: "Aloeceae",
 rod: "Aloe",
 druh: "stromovitá",
 
@@ -45,10 +48,27 @@ defwef: "deeeffe",
 fwefwef: "frregreg",
 pefkfkfk: "defwef",
 
-src: `db/aloe_arborescens.jpg`,
+src: `aloe_arborescens.jpg`,
 from: `wikipedia.org`
         
 },
+{
+
+    item: "Anthurium",
+    
+    rod: "Kráva",
+    druh: "Táňa",
+    
+    genus: "Begonia",
+    specio: "efwefwf",
+    
+    madararar: "fuj",
+    awdwfwef: "nevim",
+    
+    src: `anthurium.jpg`,
+    from: ``
+    
+    },
 
 
 

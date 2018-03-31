@@ -21,6 +21,28 @@ body {
     padding-bottom: 10px;
 }
 
+#mainInputs {
+
+    text-align: left;
+    padding-left: 10%;
+    padding-right: 10%;
+
+}
+
+#mainInputs > input {
+    background-color: greenyellow;
+    border: solid teal;
+    border-radius: 5px;
+    width: 100%;
+    height: 25px;
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+#mainImg {
+    margin-bottom: 10px;
+}
+
 #cheat1, #cheat2 {
     background-color: red;
     width: 15%;
