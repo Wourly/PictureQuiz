@@ -6,7 +6,7 @@ document.querySelector("title").innerHTML = title;
 program.main = document.getElementById("main");
 program.selector = 3;
 
-program.wantedKeys = ["rod","trida"];
+program.wantedLangs = ["Česky", "Magyar", "Latin"];
 
 program.getKeys = () => Object.keys(db[program.selector])
 
@@ -25,40 +25,46 @@ program.getUsableKeys = () =>
 /* retrieves keys for single language based on it's position */
 program.getLangKeys = (langPos) =>
 {
-    let template = program.getUsableKeys();
     let keys = [];
 
-    for (let i = (langPos - 1) * template.length / program.getLangs().length; i < template.length / db[0].length * langPos; i++) keys.push(template[i]);
+    for (let i = (langPos - 1) * program.getUsableKeys().length / program.getLangs().length; i < program.getUsableKeys().length / program.getLangs().length * langPos; i++) keys.push(program.getUsableKeys()[i]);
 
     return keys;
 };
 
-program.getInputsForLang = (langPos) =>
-{
-    let keys = program.getLangKeys(langPos);
-    let wantedKeys = keys; //getwantedkeys
-    let finalKeys = [];
-    let inputs = [];
+program.wantedKeys = program.getKeys();
 
-    for (let key of keys)
+program.getFinalKeysForLang = (langPos) =>
+{
+    let finalKeys = [];
+
+    for (let key of program.getLangKeys(langPos))
     {
-        if (wantedKeys.includes(key)) finalKeys.push(key);
+        if (program.wantedKeys.includes(key)) finalKeys.push(key);
     }
 
-    for (let key of finalKeys)
+    return finalKeys;
+}
+
+console.log(program.getFinalKeysForLang(2));
+
+program.getInputsForLang = (langPos) =>
+{
+    let inputs = [];
+
+    for (let key of program.getFinalKeysForLang(langPos))
     {
         inputs.push(`<input id="${key}" value="${key}">`);
     }
 
     return inputs.join("<br>");
-
 }
 
 program.drawLangInputs = () => {
 
     let drawing = [];
     let langs = program.getLangs(); 
-    let wantedLangs = ["Česky", "Magyar", "Latin"]; //wantedLangs!
+    let wantedLangs = program.wantedLangs; //wantedLangs!
     let finalLangs = [];
     let finalLangsIndex = [];
 
@@ -81,6 +87,11 @@ program.drawLangInputs = () => {
     drawing.pop();
 
     return drawing.join("");
+}
+
+program.checkAnswer = () =>
+{
+
 }
 
 program.selectorMinus = () => {

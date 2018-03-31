@@ -36,7 +36,7 @@ from: ``
 
 item: "Aloe",    
 
-trida: "Aloeceae",
+trida: "Liliopsida",
 rod: "Aloe",
 druh: "stromovitá",
 
