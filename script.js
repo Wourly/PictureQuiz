@@ -5,7 +5,8 @@ document.querySelector("title").innerHTML = title;
 
 /* main div saved to program */
 body = document.body
-selector = 2;
+selector = 1;
+arrSelector = 0;
 
 let points = {}
 
@@ -31,7 +32,7 @@ getUsableKeys = () =>
     for (let i = 0; i < 2; i++) keys.pop();
 
     return keys;
-}; debug ? console.log("getUsablekeys", getUsableKeys()) : "";
+}; debug ? console.log("getUsablekeys()", getUsableKeys()) : "";
 
 
 
@@ -47,7 +48,7 @@ getLangKeys = (langPos) =>
     for (let i = (langPos - 1) * getUsableKeys().length / getLangs().length; i < getUsableKeys().length / getLangs().length * langPos; i++) keys.push(getUsableKeys()[i]);
 
     return keys;
-}; debug ? console.log("getLangKeys", getLangKeys(1)) : "";
+}; debug ? console.log("getLangKeys(1)", getLangKeys(1)) : "";
 
 
 
@@ -61,7 +62,7 @@ getFinalLangKeys = (langPos) =>
     }
 
     return finalKeys;
-}; debug ? console.log("getFinalLangKeys (get wanted keys for one lang)", getFinalLangKeys(1)) : "";
+}; debug ? console.log("getFinalLangKeys(1)", getFinalLangKeys(1)) : "";
 
 
 
@@ -75,7 +76,7 @@ getFinalLangs = () =>
     };
 
     return finalLangs;
-}; debug ? console.log("getFinalLangs", getFinalLangs()) : "";
+}; debug ? console.log("getFinalLangs()", getFinalLangs()) : "";
 
 
 
@@ -89,7 +90,7 @@ getQuestsForLang = (langPos) =>
     }
 
     return inputs.join("");
-}; debug ? console.log("getQuestsForLang", getQuestsForLang(1)) : "";
+}; debug ? console.log("getQuestsForLang(1)", getQuestsForLang(1)) : "";
 
 
 
@@ -114,7 +115,28 @@ drawQuestsAll = () => {
     return drawing.join("");
 }; debug ? console.log("drawQuestsAll", drawQuestsAll()) : "";
 
+getRandomSelectorArrayInRange = (start, end) =>
+{
+    templateArray = [];
+    selectorArray = [];
 
+    for (let i = start; i <= end; i++)
+    {
+        selectorArray.push(i);
+    }
+
+    for (let i = selectorArray.length - 1, t, random; i > 0; --i)
+    {
+      random = Math.floor(Math.random() * (i + 1));
+      t = selectorArray[random];
+      selectorArray[random] = selectorArray[i];
+      selectorArray[i] = t;
+    }
+
+    return selectorArray;
+}; debug ? console.log("getRandomSelectorArrayInRange(3,9)", getRandomSelectorArrayInRange(3,9)) : "";
+
+randomSelectorArray = getRandomSelectorArrayInRange(1,2);
 
 questionTrue = () =>
 {
@@ -182,14 +204,30 @@ selectorMinus = () => {
 }
 
 selectorPlus = () => {
-    selector++;
+    arrSelector++;
     drawTest(selector);
 }
 
-/* drawing function */
-const drawTest = (selector) =>
+const drawMenu = () =>
 {
+    return `
+    
+    <div id="mainmenu" style="background: magenta;">
+    <button onclick="console.log(getRandomSelectorArrayInRange(5,9))" on>Random selector!</button>
+    </div> 
+    
+    `
+}
+
+
+
+/* drawing function */
+const drawQuestion = (selector) =>
+{
+
+
 body.innerHTML = `
+
 <div id="test">
     <div id="cheat1">
         cheat1
@@ -206,16 +244,34 @@ body.innerHTML = `
         <button id="confirm" onclick="checkAnswer()">Check</button>
         
         <div id="points"></div>
+
+        ${drawMenu()}
+
     </div>
 
     <div id="cheat2">
         cheat2
     </div>
 </div>
+   
+
 
 
 
 `;
 };
 
-drawTest(selector);
+const drawTest = () =>
+{
+
+    let arr = [1,3,2,4]
+
+
+
+    selector = arr[arrSelector]
+
+    drawQuestion(selector)
+
+}
+
+drawTest();
