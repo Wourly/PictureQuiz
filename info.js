@@ -5,6 +5,7 @@ const icon = "ico.png"; /* icon is from https://www.iconexperience.com/g_collect
 const background = "black";
 const borderAtMain = "yes";
 const borderAtMainColor = "greenyellow";
+const wrongAnswerBackground = "red";
 
 
 

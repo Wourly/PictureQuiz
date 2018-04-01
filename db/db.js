@@ -11,8 +11,8 @@ druh: "plesnivá",
 genus: "Begonia",
 specio: "kunda",
 
-madararar: "fuj",
-reriguerugiergegr: "nevim",
+mag1: "fuj",
+mag2: "nevim",
 
 src: `begonia.jpg`,
 from: ``
@@ -23,10 +23,13 @@ from: ``
 item: "Agáve",
 
 rod: "Agáve",
+druh: "Americká",
 
 genus: "Agave",
+specio: "netušim",
 
-MADARSKYKOKOTINY: "nevim",
+mag1: "nevim",
+mag2: "idiote!!!",
 
 src: `agave.jpg`,
 from: ``
@@ -36,17 +39,17 @@ from: ``
 
 item: "Aloe",    
 
-trida: "Liliopsida",
-rod: "Aloe",
-druh: "stromovitá",
+trida: "1",
+rod: "2",
+druh: "3",
 
 class: "Anička",
 genus: "Aloe",
 specio: "Arborescens",
 
-defwef: "deeeffe",
-fwefwef: "frregreg",
-pefkfkfk: "defwef",
+mag1: "deeeffe",
+mag2: "frregreg",
+mag3: "defwef",
 
 src: `aloe_arborescens.jpg`,
 from: `wikipedia.org`

@@ -1,128 +1,221 @@
-let program = {};
+debug = true;
+
 /* setting title */
 document.querySelector("title").innerHTML = title;
 
 /* main div saved to program */
-program.main = document.getElementById("main");
-program.selector = 3;
+body = document.body
+selector = 2;
 
-program.wantedLangs = ["Česky", "Magyar", "Latin"];
+let points = {}
 
-program.getKeys = () => Object.keys(db[program.selector])
+points.wrong = 0;
+points.collected = 0;
+points.max = 500;
 
-program.getLangs = () => db[0];
+wrongedSelectors = [];
 
-program.getUsableKeys = () =>
+wantedLangs = ["Česky", "Latin", "Magyar"];
+debug ? console.log("wantedLangs", wantedLangs) : "";
+
+getKeys = () => Object.keys(db[selector])
+
+getLangs = () => db[0];
+debug ? console.log("getLangs()", getLangs()) : "";
+
+getUsableKeys = () =>
 {
-    let keys = program.getKeys();
+    let keys = getKeys();
     
     keys.shift();
     for (let i = 0; i < 2; i++) keys.pop();
 
     return keys;
-};
+}; debug ? console.log("getUsablekeys", getUsableKeys()) : "";
 
-/* retrieves keys for single language based on it's position */
-program.getLangKeys = (langPos) =>
+
+
+wantedKeys = ["rod", "druh", "genus"];
+debug ? console.log("wantedKeys", wantedKeys) : "";
+
+
+
+getLangKeys = (langPos) =>
 {
     let keys = [];
 
-    for (let i = (langPos - 1) * program.getUsableKeys().length / program.getLangs().length; i < program.getUsableKeys().length / program.getLangs().length * langPos; i++) keys.push(program.getUsableKeys()[i]);
+    for (let i = (langPos - 1) * getUsableKeys().length / getLangs().length; i < getUsableKeys().length / getLangs().length * langPos; i++) keys.push(getUsableKeys()[i]);
 
     return keys;
-};
+}; debug ? console.log("getLangKeys", getLangKeys(1)) : "";
 
-program.wantedKeys = program.getKeys();
 
-program.getFinalKeysForLang = (langPos) =>
+
+getFinalLangKeys = (langPos) =>
 {
     let finalKeys = [];
 
-    for (let key of program.getLangKeys(langPos))
+    for (let key of getLangKeys(langPos))
     {
-        if (program.wantedKeys.includes(key)) finalKeys.push(key);
+        if (wantedKeys.includes(key)) finalKeys.push(key);
     }
 
     return finalKeys;
-}
+}; debug ? console.log("getFinalLangKeys (get wanted keys for one lang)", getFinalLangKeys(1)) : "";
 
-console.log(program.getFinalKeysForLang(2));
 
-program.getInputsForLang = (langPos) =>
+
+getFinalLangs = () =>
 {
-    let inputs = [];
-
-    for (let key of program.getFinalKeysForLang(langPos))
-    {
-        inputs.push(`<input id="${key}" value="${key}">`);
-    }
-
-    return inputs.join("<br>");
-}
-
-program.drawLangInputs = () => {
-
-    let drawing = [];
-    let langs = program.getLangs(); 
-    let wantedLangs = program.wantedLangs; //wantedLangs!
     let finalLangs = [];
-    let finalLangsIndex = [];
 
-    for (let lang of langs)
+    for (let lang of getLangs())
     {
         if (wantedLangs.includes(lang)) finalLangs.push(lang);
     };
 
-    for (let finalLang of finalLangs)
+    return finalLangs;
+}; debug ? console.log("getFinalLangs", getFinalLangs()) : "";
+
+
+
+getQuestsForLang = (langPos) =>
+{
+    let inputs = [];
+
+    for (let key of getFinalLangKeys(langPos))
     {
-        finalLangsIndex.push(program.getLangs().indexOf(finalLang));
+        inputs.push(`<input id="${key}" value="${key}"><div id="answer${key}"></div>`);
+    }
+
+    return inputs.join("");
+}; debug ? console.log("getQuestsForLang", getQuestsForLang(1)) : "";
+
+
+
+drawQuestsAll = () => {
+
+    let drawing = [];
+    let finalLangsIndex = [];
+
+    for (let finalLang of getFinalLangs())
+    {
+        finalLangsIndex.push(getLangs().indexOf(finalLang));
     }
 
     for (let index of finalLangsIndex)
     {
-        drawing.push(program.getInputsForLang(index + 1));
-        drawing.push("<hr>");
-    }
+        drawing.push(getQuestsForLang(index + 1));
+        drawing.push("<br>");
+    };
 
     drawing.pop();
 
     return drawing.join("");
-}
+}; debug ? console.log("drawQuestsAll", drawQuestsAll()) : "";
 
-program.checkAnswer = () =>
+
+
+questionTrue = () =>
 {
-
+    points.collected++;
+    let height = 25;
+    let width = 25;
+    return `
+<svg height="${height}" width="${width}">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="25%" style="stop-color:teal;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:greenyellow;stop-opacity:1" />
+    </linearGradient>
+  
+  </defs>
+  <polygon points="${height*0.3},${width*0.75} ${height*0.1},${width*0.5} ${height*0.01},${width*0.7} ${height*0.3},${width*0.99} ${height*0.99},${width*0.31} ${height*0.99},${width*0.1}"
+  
+  style="fill: url(#grad1); stroke:lime;stroke-width:1" />
+  Sorry, your browser does not support inline SVG.
+</svg>
+    `
 }
 
-program.selectorMinus = () => {
-    program.selector--;
-    drawAll(program.selector);
+questionFalse = (key) =>
+{
+    points.wrong++;
+    document.getElementById(key).style.background = wrongAnswerBackground;
+    return db[selector][key];
 }
 
-program.selectorPlus = () => {
-    program.selector++;
-    drawAll(program.selector);
+getPossibleWantedKeys = () => {
+
+    let possibleKeys = [];
+    for (let key of wantedKeys)
+    {
+        if (getKeys().includes(key)) possibleKeys.push(key);
+    };
+
+    return possibleKeys;
+};
+
+checkAnswer = () =>
+{
+    for (let key of getPossibleWantedKeys())
+    {
+        document.getElementById(`answer${key}`).innerHTML = db[selector][key].toLowerCase() == document.getElementById(key).value.toLowerCase() ?
+        questionTrue() : questionFalse(key);
+    }
+
+    document.getElementById("points").innerHTML = `${points.collected} of ${points.max}`;
+    button = document.getElementById("confirm")
+    button.innerHTML = "Next";
+    button.setAttribute('onclick','selectorPlus()');
+
+    console.log("Čudlítko:", button)
+};
+
+
+
+
+
+selectorMinus = () => {
+    selector--;
+    drawTest(selector);
+}
+
+selectorPlus = () => {
+    selector++;
+    drawTest(selector);
 }
 
 /* drawing function */
-const drawAll = (selector) =>
+const drawTest = (selector) =>
 {
-main.innerHTML = `
+body.innerHTML = `
+<div id="test">
+    <div id="cheat1">
+        cheat1
+    </div>
 
-${/* Drawing image */''}
-<img id="mainImg" src="db/${db[selector].src}" width="100%">
+    <div id="main">
+        ${/* Drawing image */''}
+        <img id="mainImg" src="db/${db[selector].src}" width="100%">
 
-<div id="mainInputs">
-${db[program.selector].rod} 
-${db[program.selector].druh}
-<hr>
-${program.drawLangInputs()}
+        <div id="mainInputs">
+        ${drawQuestsAll()}
+        </div>
+        
+        <button id="confirm" onclick="checkAnswer()">Check</button>
+        
+        <div id="points"></div>
+    </div>
+
+    <div id="cheat2">
+        cheat2
+    </div>
 </div>
 
-<button onclick="program.selectorMinus()">Previous</button>
-<button onclick="program.selectorPlus()">Next</button>
+
 
 `;
 };
 
-drawAll(program.selector);
+drawTest(selector);
