@@ -3,6 +3,7 @@ body {
     text-align: center;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 25px;
+    color: orange;
 }
 
 #mainImg {
@@ -20,10 +21,9 @@ body {
     border-radius: 25px;
     padding-bottom: 10px;
     margin-bottom: 10px;
-    color: #111144;
 }
 
-#main > div > div {
+#mainTest > div > div {
     margin-top: 2px;
     margin-bottom: 5px;
 }
@@ -50,17 +50,17 @@ body {
     margin-bottom: 10px;
 }
 
-#cheat1, #cheat2 {
+#cheat1, #cheat2, #langs, #names {
     background-color: red;
     width: 15%;
 }
 
-#cheat1 {
+#cheat1, #langs {
     float: left;
     margin-left: 4%;
 }
 
-#cheat2 {
+#cheat2, #names {
     float: right;
     margin-right: 4%;
 }

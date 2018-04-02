@@ -5,10 +5,9 @@ document.querySelector("title").innerHTML = title;
 
 
 /* main div saved to program */
-const body = document.body
+const body = document.body;
 selector = 0;
 arrSelector = 0;
-randomSelectors = [1];
 
 let local = {};
 local.wrongs = 0;
@@ -120,7 +119,7 @@ drawQuestsAll = () => {
     return drawing.join("");
 }; debug ? console.log("drawQuestsAll", drawQuestsAll()) : "";
 
-getRandomSelectorArrayInRange = (start, end) =>
+getchosenSelectorArrayInRange = (start, end) =>
 {
     templateArray = [];
     selectorArray = [];
@@ -139,9 +138,9 @@ getRandomSelectorArrayInRange = (start, end) =>
     }
 
     return selectorArray;
-}; debug ? console.log("getRandomSelectorArrayInRange(3,9)", getRandomSelectorArrayInRange(3,9)) : "";
+}; debug ? console.log("getchosenSelectorArrayInRange(1,2)", getchosenSelectorArrayInRange(1,2)) : "";
 
-randomSelectorArray = getRandomSelectorArrayInRange(1,2);
+chosenSelectorArray = getchosenSelectorArrayInRange(1,3);
 
 questionTrue = () =>
 {
@@ -196,7 +195,7 @@ checkAnswer = () =>
     document.getElementById("points").innerHTML = `${points.collected} of ${points.max}`;
     button = document.getElementById("confirm")
 
-    if (arrSelector != randomSelectors.length - 1)
+    if (arrSelector != chosenSelectorArray.length - 1)
     {
         button.innerHTML = "Next";
         button.setAttribute('onclick','selectorPlus()');
@@ -216,17 +215,6 @@ selectorPlus = () => {
     drawTest(selector);
 }
 
-const drawMenu = () =>
-{
-    return `
-    
-    <div id="mainmenu" style="background: magenta;">
-    <button onclick="console.log(getRandomSelectorArrayInRange(5,9))" on>Random selector!</button>
-    </div> 
-    
-    `
-}
-
 
 
 /* drawing function */
@@ -234,7 +222,7 @@ const drawQuestion = (selector) =>
 {
 body.innerHTML = `
 
-<div id="test">
+<div id="body">
     <div id="cheat1">
         cheat1
     </div>
@@ -250,9 +238,6 @@ body.innerHTML = `
         <button id="confirm" onclick="checkAnswer()">Check</button>
         
         <div id="points"></div>
-
-        ${drawMenu()}
-
     </div>
 
     <div id="cheat2">
@@ -263,7 +248,7 @@ body.innerHTML = `
 };
 
 
-const againTest = () =>
+const drawButtonTestAgain = () =>
 {
 
     if (wrongedSelectors.length > 0)
@@ -295,19 +280,42 @@ const drawResults = () =>
     <div id="results" style="color: red;">
     Dobře ty, máš ${points.collected} z 500;
     <div>
-    ${againTest()}
+    ${drawButtonTestAgain()}
     
     `
     arrSelector = 0;
-    randomSelectors = wrongedSelectors;
+    chosenSelectorArray = wrongedSelectors;
     wrongedSelectors = [];
 }
 
 const drawTest = () =>
 {
-    selector = randomSelectors[arrSelector];
+    selector = chosenSelectorArray[arrSelector];
 
     drawQuestion(selector)
 }
 
-drawTest();
+const drawMenu = () =>
+{
+    randomMenuSelector = Math.floor(Math.random() * (db.length - 1) + 1)
+    console.log(randomMenuSelector)
+    body.innerHTML = `
+    <div id="body">
+        <div id="langs">Jazylka</div>
+        <div id="main">
+
+            <div id="menuImageShowcase">
+                <img id="mainImg" src="db/${db[randomMenuSelector].src}" width="100%">
+                ${db[randomMenuSelector].rod} ${db[randomMenuSelector].druh}
+            </div>
+
+            <br>
+            <button onclick="setPage('test')">Start test!</button>
+            <button onclick="alert("HI")">Random selector array!</button>
+
+        </div> 
+
+        <div id="names">Rodíček<div>
+    </div>
+    `
+}

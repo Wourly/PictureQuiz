@@ -1,3 +1,8 @@
+const template = [
+    "trida", "rod", "druh",
+    "class", "genus", "specio"
+];
+
 const db = [
 ["Česky", "Latin", "Magyar"], /* SET LANGUAGES */
     
@@ -14,7 +19,7 @@ specio: "kunda",
 mag1: "fuj",
 mag2: "nevim",
 
-src: `begonia.jpg`,
+src: "begonia.jpg",
 from: ``
 
 },
