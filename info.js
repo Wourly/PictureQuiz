@@ -2,6 +2,8 @@
 const title = "Poznávačka rostlin ze základů zahradnictví";
 const icon = "ico.png"; /* icon is from https://www.iconexperience.com/g_collection/icons/?icon=plant */
 
+const textColor = "orange";
+const textSelectedColor = "navy";
 const background = "black";
 const borderAtMain = "yes";
 const borderAtMainColor = "greenyellow";
@@ -19,6 +21,10 @@ const css =
 body
 {
     background: ${background};
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 25px;
+    color: ${textColor};
 }
 #main
 {

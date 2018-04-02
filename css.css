@@ -1,11 +1,3 @@
-body {
-    background-color: #000000;
-    text-align: center;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 25px;
-    color: orange;
-}
-
 #mainImg {
     border-radius: 22px 22px 0px 0px;
 }    
@@ -17,6 +9,13 @@ body {
     background-color: rgb(20, 90, 30);
     left: 50%;
     transform: translateX(-50%);
+}
+
+.lang:hover {
+    background: red;
+}
+
+#main, #cheat1, #cheat2, #langs, #names {
     border: solid greenyellow;
     border-radius: 25px;
     padding-bottom: 10px;
@@ -29,11 +28,9 @@ body {
 }
 
 #mainInputs {
-
     text-align: middle;
     padding-left: 10%;
     padding-right: 10%;
-
 }
 
 #mainInputs > input {
@@ -51,7 +48,10 @@ body {
 }
 
 #cheat1, #cheat2, #langs, #names {
-    background-color: red;
+    margin-top: 25px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: rgb(20, 90, 30);
     width: 15%;
 }
 

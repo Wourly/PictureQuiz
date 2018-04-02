@@ -1,11 +1,11 @@
 const template = [
     "trida", "rod", "druh",
-    "class", "genus", "specio"
+    "class", "genus", "specio",
+    "wurflengid", "bridrass", "eziorm"
 ];
 
 const db = [
-["Česky", "Latin", "Magyar"], /* SET LANGUAGES */
-    
+["Česky", "Latin", "Magyar"], /* SET LANGUAGES */   
 {
 
 item: "Begónie",

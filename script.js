@@ -20,7 +20,7 @@ points.max = 500;
 
 wrongedSelectors = [];
 
-wantedLangs = ["Česky", "Latin", "Magyar"];
+wantedLangs = [];
 debug ? console.log("wantedLangs", wantedLangs) : "";
 
 getKeys = () => Object.keys(db[selector])
@@ -186,7 +186,7 @@ getPossibleWantedKeys = () => {
 checkAnswer = () =>
 {
     let localWrongs = 0;
-    for (let key of getPossibleWantedKeys())
+    for (let key of getPossibleWantedKeys()) /* in selected langs ----- !!!!!*/
     {
         document.getElementById(`answer${key}`).innerHTML = db[selector][key].toLowerCase() == document.getElementById(key).value.toLowerCase() ?
         questionTrue() : questionFalse(key);
@@ -295,13 +295,94 @@ const drawTest = () =>
     drawQuestion(selector)
 }
 
+const drawMenuLangs = () =>
+{
+    drawing = [];
+
+    for (let lang of getLangs())
+    {
+        drawing.push(`<div id="lang${lang}" class="lang" onclick="addLangForTest('${lang}')">${lang}</div>`);
+    }
+
+    return drawing.join(" ");
+}
+
+const getNamesForSelectedLang = () =>
+{
+    names = [];
+
+    console.log("Index", wantedLangs.indexOf(wantedLangs[0]));
+
+    for (let i = 0; i < template.length; i++)
+    {
+        if (i < 3)
+        {
+            names.push(template[i]);
+        }
+    }
+
+    /* POKUD SE ODEJME JAZYK, MUSÍ SE ZNIČIT JEHO KLÍČE! */
+
+    console.log(names);
+    return names;
+}
+
+const drawMenuNames = () =>
+{
+    drawing = [];
+
+
+
+    for (let name of getNamesForSelectedLang())
+    {
+        drawing.push(`${name}`);
+    }
+
+    return drawing.join("<br>");
+}
+
+const addLangForTest = (lang) =>
+{
+    const removeLang = () =>
+    {
+        let index = wantedLangs.indexOf(lang);
+        if (index !== -1) wantedLangs.splice(index, 1);
+    }
+
+    const element = document.getElementById(`lang${lang}`);
+
+    if (!wantedLangs.includes(lang))
+    {
+        wantedLangs.push(lang);
+        element.style.color = textSelectedColor;
+    }
+    else
+    {
+        removeLang(lang);
+        element.style.color = textColor;
+    }
+
+    let temporary = [];
+    
+    for (let i = 0; i < getLangs().length; i++)
+    {
+        if (wantedLangs.includes(getLangs()[i])) temporary.push(getLangs()[i]);
+    };
+
+    wantedLangs = temporary;
+
+    document.getElementById("names").innerHTML = drawMenuNames();
+
+    debug ? console.log("AddLangForTest", wantedLangs) : "";
+}
+
 const drawMenu = () =>
 {
     randomMenuSelector = Math.floor(Math.random() * (db.length - 1) + 1)
-    console.log(randomMenuSelector)
+    console.log("Random Menu Selector:",randomMenuSelector)
     body.innerHTML = `
     <div id="body">
-        <div id="langs">Jazylka</div>
+        <div id="langs">${drawMenuLangs()}</div>
         <div id="main">
 
             <div id="menuImageShowcase">
@@ -315,7 +396,7 @@ const drawMenu = () =>
 
         </div> 
 
-        <div id="names">Rodíček<div>
+        <div id="names"><div>
     </div>
     `
 }

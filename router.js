@@ -1,12 +1,12 @@
+
+
 const setPage = (page) =>
 {
-
     start = window.location.hash;
     console.log(start);
 
     window.location.hash = `#${page}`
     router();
-
 }
 
 const router = () =>
@@ -19,12 +19,13 @@ const router = () =>
         case "#test": drawTest(); break;
         default: drawMenu(); break;
     }
-
 }
 
 const drawErrorPage = () =>
 {
     document.body.innerHTML = "Page not found!";
 }
+
+window.onhashchange = router;
 
 router();
