@@ -3,10 +3,15 @@ debug = true;
 /* setting title */
 document.querySelector("title").innerHTML = title;
 
+
 /* main div saved to program */
-body = document.body
-selector = 1;
+const body = document.body
+selector = 0;
 arrSelector = 0;
+randomSelectors = [1];
+
+let local = {};
+local.wrongs = 0;
 
 let points = {}
 
@@ -164,6 +169,7 @@ questionFalse = (key) =>
 {
     points.wrong++;
     document.getElementById(key).style.background = wrongAnswerBackground;
+    local.wrongs++;
     return db[selector][key];
 }
 
@@ -180,6 +186,7 @@ getPossibleWantedKeys = () => {
 
 checkAnswer = () =>
 {
+    let localWrongs = 0;
     for (let key of getPossibleWantedKeys())
     {
         document.getElementById(`answer${key}`).innerHTML = db[selector][key].toLowerCase() == document.getElementById(key).value.toLowerCase() ?
@@ -188,20 +195,21 @@ checkAnswer = () =>
 
     document.getElementById("points").innerHTML = `${points.collected} of ${points.max}`;
     button = document.getElementById("confirm")
-    button.innerHTML = "Next";
-    button.setAttribute('onclick','selectorPlus()');
 
-    console.log("Čudlítko:", button)
+    if (arrSelector != randomSelectors.length - 1)
+    {
+        button.innerHTML = "Next";
+        button.setAttribute('onclick','selectorPlus()');
+    }
+    else
+    {
+        button.innerHTML = "Results";
+        button.setAttribute('onclick','drawResults()');
+    }
+
+    if (local.wrongs > 0) wrongedSelectors.push(selector);
+    local.wrongs = 0;
 };
-
-
-
-
-
-selectorMinus = () => {
-    selector--;
-    drawTest(selector);
-}
 
 selectorPlus = () => {
     arrSelector++;
@@ -224,8 +232,6 @@ const drawMenu = () =>
 /* drawing function */
 const drawQuestion = (selector) =>
 {
-
-
 body.innerHTML = `
 
 <div id="test">
@@ -253,25 +259,55 @@ body.innerHTML = `
         cheat2
     </div>
 </div>
-   
-
-
-
-
 `;
 };
 
-const drawTest = () =>
+
+const againTest = () =>
 {
 
-    let arr = [1,3,2,4]
+    if (wrongedSelectors.length > 0)
+    {
+        return `
+        
+        <button onclick="drawTest()">Tak ty nemáš dost?</button>
 
 
 
-    selector = arr[arrSelector]
+        `
+    }
+    else
+    {
+        return `
+        
+        Blahopřeji!
+
+
+
+        `
+    }
+}
+
+const drawResults = () =>
+{
+    body.innerHTML = `
+    
+    <div id="results" style="color: red;">
+    Dobře ty, máš ${points.collected} z 500;
+    <div>
+    ${againTest()}
+    
+    `
+    arrSelector = 0;
+    randomSelectors = wrongedSelectors;
+    wrongedSelectors = [];
+}
+
+const drawTest = () =>
+{
+    selector = randomSelectors[arrSelector];
 
     drawQuestion(selector)
-
 }
 
 drawTest();
