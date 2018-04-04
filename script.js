@@ -307,24 +307,23 @@ const drawMenuLangs = () =>
     return drawing.join(" ");
 }
 
-const getNamesForSelectedLang = () =>
+const getDefaultKeysForLang = () =>
 {
-    names = [];
+
+
+    keys = [];
 
     console.log("Index", wantedLangs.indexOf(wantedLangs[0]));
 
-    for (let i = 0; i < template.length; i++)
+    for (let i = 0; i < wantedLangs.length; i++)
     {
-        if (i < 3)
+        for (let j = getLangs().indexOf(wantedLangs[i]) * getLangs().length; j < getLangs().indexOf(wantedLangs[i]) * getLangs().length + getLangs().length; j++)
         {
-            names.push(template[i]);
+            keys.push(template[j]);
         }
     }
 
-    /* POKUD SE ODEJME JAZYK, MUSÍ SE ZNIČIT JEHO KLÍČE! */
-
-    console.log(names);
-    return names;
+   return keys;
 }
 
 const drawMenuNames = () =>
@@ -333,7 +332,7 @@ const drawMenuNames = () =>
 
 
 
-    for (let name of getNamesForSelectedLang())
+    for (let name of getDefaultKeysForLang())
     {
         drawing.push(`${name}`);
     }
@@ -379,7 +378,6 @@ const addLangForTest = (lang) =>
 const drawMenu = () =>
 {
     randomMenuSelector = Math.floor(Math.random() * (db.length - 1) + 1)
-    console.log("Random Menu Selector:",randomMenuSelector)
     body.innerHTML = `
     <div id="body">
         <div id="langs">${drawMenuLangs()}</div>
