@@ -1,7 +1,6 @@
 const setPage = (page) =>
 {
     start = window.location.hash;
-    console.log(start);
 
     window.location.hash = `#${page}`
     router();

@@ -22,7 +22,6 @@ points.max = 0;
 wrongedSelectors = [];
 
 wantedLangs = [];
-debug ? console.log("wantedLangs", wantedLangs) : "";
 
 getKeys = () => Object.keys(db[selector])
 
@@ -160,7 +159,6 @@ drawChecker = () =>
     let width = 25;
 
     return `
-    
     <svg height="${height}" width="${width}">
     <defs>
       <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -174,7 +172,6 @@ drawChecker = () =>
     style="fill: url(#grad1); stroke:lime;stroke-width:1" />
     Sorry, your browser does not support inline SVG.
   </svg>
-
     `
 }
 
@@ -215,7 +212,10 @@ checkAnswer = () =>
         questionTrue() : questionFalse(key);
     }
 
-    document.getElementById("points").innerHTML = `${points.collected} of ${points.collected + points.wrong}`;
+    document.getElementById("points").innerHTML = `${points.collected} z ${points.collected + points.wrong} správně<br>
+    
+    ${arrSelector + 1} z ${chosenSelectorArray.length} otázek
+    `;
     button = document.getElementById("confirm")
 
     if (arrSelector != chosenSelectorArray.length - 1)
@@ -253,7 +253,7 @@ body.innerHTML = `
         ${drawQuestsAll()}
         </div>
         <br>
-        <button id="confirm" onclick="checkAnswer()">Check</button>
+        <button id="confirm" onclick="checkAnswer()">Zkontrolovat</button>
         <br><br>
         <div id="points"></div>
     </div>
@@ -271,7 +271,7 @@ const drawWronged = () =>
         drawing.push(`<div class="wronged">${db[i].item}</div>`);
     }
 
-    return "Špatně zodpovězené položky:" + drawing.join("");
+    return "Špatně zodpovězené položky:<br><br>" + drawing.join("");
 }
 
 const drawButtonTestAgain = () =>
@@ -297,7 +297,7 @@ const drawButtonTestAgain = () =>
         return `
         
         
-        Všechny položky byly dodělány bez chyb, gratuluju
+        Všechno je správně, gratuluji!
         <br><br>
         ${drawChecker()}
 
@@ -315,10 +315,11 @@ const drawResults = () =>
     <div id="body">
     <div id="main">
     <div id="results">
-    Správně máš ${points.collected} z ${points.collected + points.wrong};
+    <br>
+    Máš ${points.collected} z ${points.collected + points.wrong} bodů!
     <div>
     ${drawButtonTestAgain()}
-    
+    <br><br>
     </div> 
 </div>
 
@@ -337,9 +338,17 @@ const startTest = () =>
     const start = document.getElementById("start").value;
     const end = document.getElementById("end").value;
 
-    chosenSelectorArray = getChosenSelectorArrayInRange(start, end);
+    if (wantedLangs.length == 0) alert("Nejsou vybrány žádné jazyky!")
+    else if (wantedKeys.length == 0) alert("Nejsou vybrány žádné parametry!")
+    else if (start.trim() == "") alert("Není zadaná hodnota!")
+    else if ((isNaN(start.trim()) && isNaN(end.trim()))) alert ("Je nutné zadávat pouze čísla!");
+    else if (start > end) alert("První číslo musí být rovno druhému číslu nebo nižší!")
+    else if (end > db.length - 1) alert(`V databázi není víc než ${db.length - 1} položek!`)
+    else {
+        chosenSelectorArray = getChosenSelectorArrayInRange(start, end);
 
-    setPage("test");
+        setPage("test");
+    }
 };
 
 const drawTest = () =>
@@ -367,9 +376,12 @@ const getDefaultKeysForLangs = () =>
 
     keys = [];
 
+
+
     for (let i = 0; i < wantedLangs.length; i++)
     {
-        for (let j = getLangs().indexOf(wantedLangs[i]) * getLangs().length; j < getLangs().indexOf(wantedLangs[i]) * getLangs().length + getLangs().length; j++)
+        for (
+        let j = getLangs().indexOf(wantedLangs[i]) * (template.length/getLangs().length); j < getLangs().indexOf(wantedLangs[i]) * (template.length/getLangs().length) + (template.length/getLangs().length); j++)
         {
             keys.push(template[j]);
         }
@@ -381,8 +393,6 @@ const getDefaultKeysForLangs = () =>
 const drawMenuKeys = () =>
 {
     drawing = [];
-
-    /* GET DRAWN MENU KEYS FOR LANG... splice (a css remove), pokud se odselectuje jazyk? */
 
     for (let key of getDefaultKeysForLangs())
     {
@@ -428,9 +438,6 @@ const addKeyForTest = (key) =>
     };
 
     wantedKeys = temporary;
-
-    console.log("Wanted keys", wantedKeys)
-
 }
 
 const addLangForTest = (lang) =>
@@ -453,7 +460,6 @@ const addLangForTest = (lang) =>
     {
         if (langIndex !== -1)
         {
-            console.log(langIndex);
             wantedLangs.splice(langIndex, 1);
             removeLangKeys();
         }
@@ -484,8 +490,6 @@ const addLangForTest = (lang) =>
     document.getElementById("names").innerHTML = drawMenuKeys();
 
     debug ? console.log("AddLangForTest", wantedLangs) : "";
-    console.log("Wanted keys", wantedKeys);
-    getKeysForLang(lang);
 }
 
 const drawMenu = () =>
@@ -501,7 +505,7 @@ const drawMenu = () =>
 
             <div id="menuImageShowcase">
                 <img id="mainImg" src="db/${db[randomMenuSelector].src}" width="100%">
-                ${db[randomMenuSelector].rod} ${db[randomMenuSelector].druh}
+                ${db[randomMenuSelector].item}
             </div>
 
             <br>
@@ -512,10 +516,10 @@ const drawMenu = () =>
             <input value="${db.length - 1}" id="end" class="menuInput"></input><br>
             <i>min 1, max ${db.length - 1}<br>
             <br>
-            <small>Je nutné zadávat pouze číslice a pokud si nevyberete jazyk a parametry, test poběží naprázdno!<br>
-            <br>
-            Při zadání nevhodného rozsahu dostanete položky, které neexistují!</small></i>
-
+            <small>
+            Položky budou náhodně promíchané.
+            <br><br>
+            Pokud položka nemá chtěný parametr, nebude v testu požadován...</small></i>
             <br><br>
             <button onclick="startTest()">Start test!</button>
             <br><br>

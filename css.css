@@ -37,7 +37,7 @@
 }
 
 #mainInputs {
-    text-align: middle;
+    text-align: center;
     padding-left: 10%;
     padding-right: 10%;
 }
@@ -47,6 +47,8 @@ small {
 }
 
 input {
+    margin-top: 10px;
+    margin-bottom: 5px;
     background-color: greenyellow;
     border: solid teal;
     border-radius: 5px;

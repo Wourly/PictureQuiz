@@ -1,28 +1,26 @@
 const template = [
-    "trida", "rod", "druh",
-    "class", "genus", "specio",
-    "wurflengid", "bridrass", "eziorm"
+    "rod", "druh",
+    "genus", "specio"
 ];
 
 const db = [
-["Česky", "Latin", "Magyar"], /* SET LANGUAGES */   
+["Česky", "Latin"],
+/*1 FIRST */
 {
 
 item: "Begónie",
 
 rod: "Begónie",
-druh: "plesnivá",
+druh_nenalezen: "",
 
 genus: "Begonia",
-specio: "kunda",
-
-mag1: "fuj",
-mag2: "nevim",
+specio_nenalezen: "",
 
 src: "begonia.jpg",
-from: `https://www.thompson-morgan.com/`
+from: `thompson-morgan.com`
 
 },
+/*2 NEXT */
 {
 
 item: "Agáve",
@@ -31,51 +29,131 @@ rod: "Agáve",
 druh: "Americká",
 
 genus: "Agave",
-specio: "netušim",
-
-mag1: "nevim",
-mag2: "idiote!!!",
+specio: "Americana",
 
 src: `agave.jpg`,
-from: ``
+from: `wikipedia.org`
     
 },
+/*3 NEXT */
 {
 
 item: "Aloe",    
 
-trida: "1",
-rod: "2",
-druh: "3",
+rod: "Aloe",
+druh: "stromovitá",
 
-class: "Anička",
 genus: "Aloe",
 specio: "Arborescens",
-
-mag1: "deeeffe",
-mag2: "frregreg",
-mag3: "defwef",
 
 src: `aloe_arborescens.jpg`,
 from: `wikipedia.org`
         
 },
+/*4 NEXT */
 {
 
-    item: "Anthurium",
+item: "Anthurium",
+
+rod: "Toulitka",
+druh: "Andréova",
+
+genus: "Anthurium",
+specio: "Andraeanum",
+
+src: `anthurium.jpg`,
+from: `bunches.co.uk`
+
+},
+/*5 NEXT */
+{
+
+item: "Asparagus",
+
+rod: "Chřest",
+druh: "Lékařský",
+
+genus: "Asparagus",
+specio: "Officinalis",
+
+src: `asparagus_officinalis.jpg`,
+from: `wikipedia.org`
+
+},
+/*6 NEXT */
+{
+
+item: "Aucuba",
+
+rod: "Aukuba",
+druh: "Japonská",
+
+genus: "Aucuba",
+specio: "Japonica",
+
+src: `aucuba_japonica.jpg`,
+from: `havlis.cz`
+
+},
+/*7 NEXT */
+{
+
+item: "Zelenec",
     
-    rod: "Kráva",
-    druh: "Táňa",
+rod: "Zelenec",
+druh_nenalezen: "",
     
-    genus: "Begonia",
-    specio: "efwefwf",
+genus: "Chlorophytum",
+specio: "Comosum",
     
-    madararar: "fuj",
-    awdwfwef: "nevim",
+src: `chlorophytum_comosum.jpg`,
+from: `lucidcentral.org`
     
-    src: `anthurium.jpg`,
-    from: ``
+},
+/*8 NEXT */
+{
+
+item: "Kodieum",
     
+rod: "Kodieum",
+druh_nenalezen: "",
+    
+genus: "Codiaeum",
+specio: "Variegatum",
+    
+src: `codiaeum_variegatum.jpg`,
+from: `biolib.cz`
+    
+},
+/*9 NEXT */
+{
+
+item: "Coffea",
+    
+rod: "Kávovník",
+druh: "Arabský",
+    
+genus: "Coffea",
+specio: "Arabica",
+    
+src: `coffea_arabica.jpg`,
+from: `biolib.cz`
+    
+},
+/*10 NEXT */
+{
+
+    item: "Crassula",
+        
+    rod: "Tlustice",
+    druh: "Vejčitá",
+        
+    genus: "Crassula",
+    specio: "Ovata",
+        
+    src: `crassula_ovata.jpg`,
+    from: `wikipedia.org`
+        
     },
 
 
@@ -88,4 +166,6 @@ from: `wikipedia.org`
 
 
 
+
+/* DO NOT REMOVE THAT, OR ADD ANY ITEMS BEYOND: */
 ]
