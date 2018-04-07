@@ -1,5 +1,3 @@
-
-
 const setPage = (page) =>
 {
     start = window.location.hash;
@@ -17,8 +15,10 @@ const router = () =>
     {
         case "#menu": drawMenu(); break;
         case "#test": drawTest(); break;
+        case "#results": drawResults(); break;
         default: drawMenu(); break;
     }
+
 }
 
 const drawErrorPage = () =>

@@ -20,7 +20,7 @@ mag1: "fuj",
 mag2: "nevim",
 
 src: "begonia.jpg",
-from: ``
+from: `https://www.thompson-morgan.com/`
 
 },
 {

@@ -2,8 +2,8 @@
 const title = "Poznávačka rostlin ze základů zahradnictví";
 const icon = "ico.png"; /* icon is from https://www.iconexperience.com/g_collection/icons/?icon=plant */
 
-const textColor = "orange";
-const textSelectedColor = "navy";
+const textColor = "goldenrod";
+const textSelectedColor = "teal";
 const background = "black";
 const borderAtMain = "yes";
 const borderAtMainColor = "greenyellow";

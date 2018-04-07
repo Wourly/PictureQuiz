@@ -11,8 +11,12 @@
     transform: translateX(-50%);
 }
 
-.lang:hover {
-    background: red;
+.lang, .key {
+    transition: 0.1s;
+}
+
+.lang:hover, .key:hover {
+    color: navy;
 }
 
 #main, #cheat1, #cheat2, #langs, #names {
@@ -27,13 +31,22 @@
     margin-bottom: 5px;
 }
 
+.selected {
+    color: green;
+    background-color: greenyellow;
+}
+
 #mainInputs {
     text-align: middle;
     padding-left: 10%;
     padding-right: 10%;
 }
 
-#mainInputs > input {
+small {
+    font-size: 15px;
+}
+
+input {
     background-color: greenyellow;
     border: solid teal;
     border-radius: 5px;
@@ -41,6 +54,11 @@
     height: 25px;
     padding-left: 3%;
     padding-right: 3%;
+}
+
+.menuInput {
+    width: 50%;
+    text-align: middle;
 }
 
 #mainImg {
@@ -63,4 +81,18 @@
 #cheat2, #names {
     float: right;
     margin-right: 4%;
+}
+
+button {
+    color: greenyellow;
+    border-radius: 5px;
+    background-color: darkgreen;
+    border-color: green;
+    font-size: 25px;
+}
+
+button:hover {
+    border-color: greenyellow;
+    background-color: greenyellow;
+    color: green;
 }

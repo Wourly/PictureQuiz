@@ -3,6 +3,7 @@ debug = true;
 /* setting title */
 document.querySelector("title").innerHTML = title;
 
+window.screen.colorDepth = 1;
 
 /* main div saved to program */
 const body = document.body;
@@ -16,7 +17,7 @@ let points = {}
 
 points.wrong = 0;
 points.collected = 0;
-points.max = 500;
+points.max = 0;
 
 wrongedSelectors = [];
 
@@ -40,7 +41,7 @@ getUsableKeys = () =>
 
 
 
-wantedKeys = ["rod", "druh", "genus"];
+wantedKeys = [];
 debug ? console.log("wantedKeys", wantedKeys) : "";
 
 
@@ -83,6 +84,17 @@ getFinalLangs = () =>
 }; debug ? console.log("getFinalLangs()", getFinalLangs()) : "";
 
 
+const getKeysForLang = (lang) =>
+{
+    keys = [];
+
+    for (let i = getLangs().indexOf(lang) * getLangs().length; i < (getLangs().indexOf(lang) + 1) * getLangs().length; i++)
+    {
+        keys.push(template[i]);
+    }
+
+    return keys;
+}
 
 getQuestsForLang = (langPos) =>
 {
@@ -94,7 +106,7 @@ getQuestsForLang = (langPos) =>
     }
 
     return inputs.join("");
-}; debug ? console.log("getQuestsForLang(1)", getQuestsForLang(1)) : "";
+};
 
 
 
@@ -119,7 +131,7 @@ drawQuestsAll = () => {
     return drawing.join("");
 }; debug ? console.log("drawQuestsAll", drawQuestsAll()) : "";
 
-getchosenSelectorArrayInRange = (start, end) =>
+getChosenSelectorArrayInRange = (start, end) =>
 {
     templateArray = [];
     selectorArray = [];
@@ -138,29 +150,40 @@ getchosenSelectorArrayInRange = (start, end) =>
     }
 
     return selectorArray;
-}; debug ? console.log("getchosenSelectorArrayInRange(1,2)", getchosenSelectorArrayInRange(1,2)) : "";
+}; debug ? console.log("getChosenSelectorArrayInRange(1,2)", getChosenSelectorArrayInRange(1,2)) : "";
 
-chosenSelectorArray = getchosenSelectorArrayInRange(1,3);
+chosenSelectorArray = getChosenSelectorArrayInRange(1,2);
+
+drawChecker = () =>
+{
+    let height = 25;
+    let width = 25;
+
+    return `
+    
+    <svg height="${height}" width="${width}">
+    <defs>
+      <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="25%" style="stop-color:teal;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:greenyellow;stop-opacity:1" />
+      </linearGradient>
+    
+    </defs>
+    <polygon points="${height*0.3},${width*0.75} ${height*0.1},${width*0.5} ${height*0.01},${width*0.7} ${height*0.3},${width*0.99} ${height*0.99},${width*0.31} ${height*0.99},${width*0.1}"
+    
+    style="fill: url(#grad1); stroke:lime;stroke-width:1" />
+    Sorry, your browser does not support inline SVG.
+  </svg>
+
+    `
+}
 
 questionTrue = () =>
 {
     points.collected++;
-    let height = 25;
-    let width = 25;
+
     return `
-<svg height="${height}" width="${width}">
-  <defs>
-    <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="25%" style="stop-color:teal;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:greenyellow;stop-opacity:1" />
-    </linearGradient>
-  
-  </defs>
-  <polygon points="${height*0.3},${width*0.75} ${height*0.1},${width*0.5} ${height*0.01},${width*0.7} ${height*0.3},${width*0.99} ${height*0.99},${width*0.31} ${height*0.99},${width*0.1}"
-  
-  style="fill: url(#grad1); stroke:lime;stroke-width:1" />
-  Sorry, your browser does not support inline SVG.
-</svg>
+    ${drawChecker()}
     `
 }
 
@@ -192,17 +215,17 @@ checkAnswer = () =>
         questionTrue() : questionFalse(key);
     }
 
-    document.getElementById("points").innerHTML = `${points.collected} of ${points.max}`;
+    document.getElementById("points").innerHTML = `${points.collected} of ${points.collected + points.wrong}`;
     button = document.getElementById("confirm")
 
     if (arrSelector != chosenSelectorArray.length - 1)
     {
-        button.innerHTML = "Next";
+        button.innerHTML = "Další";
         button.setAttribute('onclick','selectorPlus()');
     }
     else
     {
-        button.innerHTML = "Results";
+        button.innerHTML = "Výsledky";
         button.setAttribute('onclick','drawResults()');
     }
 
@@ -217,36 +240,39 @@ selectorPlus = () => {
 
 
 
-/* drawing function */
 const drawQuestion = (selector) =>
 {
 body.innerHTML = `
 
 <div id="body">
-    <div id="cheat1">
-        cheat1
-    </div>
 
     <div id="main">
-        ${/* Drawing image */''}
         <img id="mainImg" src="db/${db[selector].src}" width="100%">
 
         <div id="mainInputs">
         ${drawQuestsAll()}
         </div>
-        
+        <br>
         <button id="confirm" onclick="checkAnswer()">Check</button>
-        
+        <br><br>
         <div id="points"></div>
     </div>
 
-    <div id="cheat2">
-        cheat2
-    </div>
 </div>
 `;
 };
 
+const drawWronged = () =>
+{
+    drawing = [];
+
+    for (let i of wrongedSelectors)
+    {
+        drawing.push(`<div class="wronged">${db[i].item}</div>`);
+    }
+
+    return "Špatně zodpovězené položky:" + drawing.join("");
+}
 
 const drawButtonTestAgain = () =>
 {
@@ -254,10 +280,15 @@ const drawButtonTestAgain = () =>
     if (wrongedSelectors.length > 0)
     {
         return `
-        
-        <button onclick="drawTest()">Tak ty nemáš dost?</button>
+        <br>
+        Chceš si zopakovat chybné položky znovu?<br><br>
+        <br>
+        <button onclick="drawTest()">Opakovat</button>
 
+        <br>
+        <br>
 
+        ${drawWronged()}
 
         `
     }
@@ -265,34 +296,58 @@ const drawButtonTestAgain = () =>
     {
         return `
         
-        Blahopřeji!
-
+        
+        Všechny položky byly dodělány bez chyb, gratuluju
+        <br><br>
+        ${drawChecker()}
 
 
         `
     }
 }
 
+
 const drawResults = () =>
 {
+
     body.innerHTML = `
     
-    <div id="results" style="color: red;">
-    Dobře ty, máš ${points.collected} z 500;
+    <div id="body">
+    <div id="main">
+    <div id="results">
+    Správně máš ${points.collected} z ${points.collected + points.wrong};
     <div>
     ${drawButtonTestAgain()}
     
+    </div> 
+</div>
+
+
     `
     arrSelector = 0;
     chosenSelectorArray = wrongedSelectors;
     wrongedSelectors = [];
+    points.collected = 0;
+    points.wrong = 0;
 }
+
+const startTest = () =>
+{
+
+    const start = document.getElementById("start").value;
+    const end = document.getElementById("end").value;
+
+    chosenSelectorArray = getChosenSelectorArrayInRange(start, end);
+
+    setPage("test");
+};
 
 const drawTest = () =>
 {
     selector = chosenSelectorArray[arrSelector];
 
     drawQuestion(selector)
+
 }
 
 const drawMenuLangs = () =>
@@ -307,13 +362,10 @@ const drawMenuLangs = () =>
     return drawing.join(" ");
 }
 
-const getDefaultKeysForLang = () =>
+const getDefaultKeysForLangs = () =>
 {
 
-
     keys = [];
-
-    console.log("Index", wantedLangs.indexOf(wantedLangs[0]));
 
     for (let i = 0; i < wantedLangs.length; i++)
     {
@@ -326,26 +378,85 @@ const getDefaultKeysForLang = () =>
    return keys;
 }
 
-const drawMenuNames = () =>
+const drawMenuKeys = () =>
 {
     drawing = [];
 
+    /* GET DRAWN MENU KEYS FOR LANG... splice (a css remove), pokud se odselectuje jazyk? */
 
-
-    for (let name of getDefaultKeysForLang())
+    for (let key of getDefaultKeysForLangs())
     {
-        drawing.push(`${name}`);
+        if (wantedKeys.includes(key))
+        {
+            drawing.push(`<div id="key${key}" class="key selected" onclick="addKeyForTest('${key}')">${key}</div>`);
+        }
+        else
+        {
+            drawing.push(`<div id="key${key}" class="key" onclick="addKeyForTest('${key}')">${key}</div>`);
+        }
     }
 
-    return drawing.join("<br>");
+    return drawing.join(" ");
+}
+
+const addKeyForTest = (key) =>
+{
+    const removeKey = (key) =>
+    {
+        let index = wantedKeys.indexOf(key);
+        if (index !== -1) wantedKeys.splice(index, 1);
+    }
+
+    const element = document.getElementById(`key${key}`);
+
+    if (!wantedKeys.includes(key))
+    {
+        wantedKeys.push(key);
+        element.classList.add("selected");
+    }
+    else
+    {
+        removeKey(key);
+        element.classList.remove("selected");
+    }
+
+    let temporary = [];
+    
+    for (let i = 0; i < template.length; i++)
+    {
+        if (wantedKeys.includes(template[i])) temporary.push(template[i]);
+    };
+
+    wantedKeys = temporary;
+
+    console.log("Wanted keys", wantedKeys)
+
 }
 
 const addLangForTest = (lang) =>
 {
+
+    let langIndex = wantedLangs.indexOf(lang);
+
+    const removeLangKeys = () =>
+    {
+        let keyIndex;
+
+        for (let i = getLangs().indexOf(lang) * getLangs().length; i < (getLangs().indexOf(lang) + 1) * getLangs().length; i++)
+        {
+            keyIndex = wantedKeys.indexOf(template[i]);
+            if (wantedKeys.includes(template[i])) wantedKeys.splice(keyIndex,1);
+        }
+    }
+
     const removeLang = () =>
     {
-        let index = wantedLangs.indexOf(lang);
-        if (index !== -1) wantedLangs.splice(index, 1);
+        if (langIndex !== -1)
+        {
+            console.log(langIndex);
+            wantedLangs.splice(langIndex, 1);
+            removeLangKeys();
+        }
     }
 
     const element = document.getElementById(`lang${lang}`);
@@ -353,12 +464,12 @@ const addLangForTest = (lang) =>
     if (!wantedLangs.includes(lang))
     {
         wantedLangs.push(lang);
-        element.style.color = textSelectedColor;
+        element.classList.add("selected");
     }
     else
     {
         removeLang(lang);
-        element.style.color = textColor;
+        element.classList.remove("selected");
     }
 
     let temporary = [];
@@ -370,13 +481,18 @@ const addLangForTest = (lang) =>
 
     wantedLangs = temporary;
 
-    document.getElementById("names").innerHTML = drawMenuNames();
+    document.getElementById("names").innerHTML = drawMenuKeys();
 
     debug ? console.log("AddLangForTest", wantedLangs) : "";
+    console.log("Wanted keys", wantedKeys);
+    getKeysForLang(lang);
 }
 
 const drawMenu = () =>
 {
+    points.collected = 0;
+    points.wrong = 0;
+
     randomMenuSelector = Math.floor(Math.random() * (db.length - 1) + 1)
     body.innerHTML = `
     <div id="body">
@@ -389,8 +505,20 @@ const drawMenu = () =>
             </div>
 
             <br>
-            <button onclick="setPage('test')">Start test!</button>
-            <button onclick="alert("HI")">Random selector array!</button>
+
+            Položky:<br>
+            <input value="1" id="start" class="menuInput"></input><br>
+            <small>až</small><br>
+            <input value="${db.length - 1}" id="end" class="menuInput"></input><br>
+            <i>min 1, max ${db.length - 1}<br>
+            <br>
+            <small>Je nutné zadávat pouze číslice a pokud si nevyberete jazyk a parametry, test poběží naprázdno!<br>
+            <br>
+            Při zadání nevhodného rozsahu dostanete položky, které neexistují!</small></i>
+
+            <br><br>
+            <button onclick="startTest()">Start test!</button>
+            <br><br>
 
         </div> 
 
