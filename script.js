@@ -281,7 +281,7 @@ const drawButtonTestAgain = () =>
     {
         return `
         <br>
-        Chceš si zopakovat chybné položky znovu?<br><br>
+        Chceš si zopakovat chybné položky?<br><br>
         <br>
         <button onclick="drawTest()">Opakovat</button>
 
@@ -313,7 +313,7 @@ const drawResults = () =>
     body.innerHTML = `
     
     <div id="body">
-    <div id="main">
+    <div id="main" class="results">
     <div id="results">
     <br>
     Máš ${points.collected} z ${points.collected + points.wrong} bodů!
@@ -519,7 +519,7 @@ const drawMenu = () =>
             <small>
             Položky budou náhodně promíchané.
             <br><br>
-            Pokud položka nemá chtěný parametr, nebude v testu požadován...</small></i>
+            Pokud položka nemá chtěný parametr, nebude parametr v testu požadován...</small></i>
             <br><br>
             <button onclick="startTest()">Start test!</button>
             <br><br>

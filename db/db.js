@@ -53,7 +53,7 @@ from: `wikipedia.org`
 /*4 NEXT */
 {
 
-item: "Anthurium",
+item: "Toulitka",
 
 rod: "Toulitka",
 druh: "Andréova",
@@ -68,7 +68,7 @@ from: `bunches.co.uk`
 /*5 NEXT */
 {
 
-item: "Asparagus",
+item: "Chřest",
 
 rod: "Chřest",
 druh: "Lékařský",
@@ -83,7 +83,7 @@ from: `wikipedia.org`
 /*6 NEXT */
 {
 
-item: "Aucuba",
+item: "Aukuba",
 
 rod: "Aukuba",
 druh: "Japonská",
@@ -128,7 +128,7 @@ from: `biolib.cz`
 /*9 NEXT */
 {
 
-item: "Coffea",
+item: "Kávovník",
     
 rod: "Kávovník",
 druh: "Arabský",
@@ -143,18 +143,18 @@ from: `biolib.cz`
 /*10 NEXT */
 {
 
-    item: "Crassula",
-        
-    rod: "Tlustice",
-    druh: "Vejčitá",
-        
-    genus: "Crassula",
-    specio: "Ovata",
-        
-    src: `crassula_ovata.jpg`,
-    from: `wikipedia.org`
-        
-    },
+item: "Tlustice",
+    
+rod: "Tlustice",
+druh: "Vejčitá",
+    
+genus: "Crassula",
+specio: "Ovata",
+    
+src: `crassula_ovata.jpg`,
+from: `wikipedia.org`
+    
+},
 
 
 

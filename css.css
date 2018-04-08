@@ -98,3 +98,8 @@ button:hover {
     background-color: greenyellow;
     color: green;
 }
+
+.results {
+    padding-left: 20px;
+    padding-right: 10px;
+}
