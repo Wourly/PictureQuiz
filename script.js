@@ -1,34 +1,31 @@
-debug = false;
-
 /* setting title */
 document.querySelector("title").innerHTML = title;
 
-window.screen.colorDepth = 1;
 
+debug = false;
 /* main div saved to program */
 const body = document.body;
-selector = 0;
-arrSelector = 0;
+let selector = 0;
+let arrSelector = 0;
 
 let local = {};
 local.wrongs = 0;
 
 let points = {}
-
 points.wrong = 0;
 points.collected = 0;
 points.max = 0;
 
-wrongedSelectors = [];
+let wrongedSelectors = [];
 
-wantedLangs = [];
+let wantedLangs = [];
+let wantedKeys = [];
 
-getKeys = () => Object.keys(db[selector])
+const getKeys = () => Object.keys(db[selector])
 
-getLangs = () => db[0];
-debug ? console.log("getLangs()", getLangs()) : "";
+const getLangs = () => db[0];
 
-getUsableKeys = () =>
+const getUsableKeys = () =>
 {
     let keys = getKeys();
     
@@ -36,27 +33,18 @@ getUsableKeys = () =>
     for (let i = 0; i < 2; i++) keys.pop();
 
     return keys;
-}; debug ? console.log("getUsablekeys()", getUsableKeys()) : "";
+}; 
 
-
-
-wantedKeys = [];
-debug ? console.log("wantedKeys", wantedKeys) : "";
-
-
-
-getLangKeys = (langPos) =>
+const getLangKeys = (langPos) =>
 {
     let keys = [];
 
     for (let i = (langPos - 1) * getUsableKeys().length / getLangs().length; i < getUsableKeys().length / getLangs().length * langPos; i++) keys.push(getUsableKeys()[i]);
 
     return keys;
-}; debug ? console.log("getLangKeys(1)", getLangKeys(1)) : "";
+};
 
-
-
-getFinalLangKeys = (langPos) =>
+const getFinalLangKeys = (langPos) =>
 {
     let finalKeys = [];
 
@@ -66,11 +54,9 @@ getFinalLangKeys = (langPos) =>
     }
 
     return finalKeys;
-}; debug ? console.log("getFinalLangKeys(1)", getFinalLangKeys(1)) : "";
+};
 
-
-
-getFinalLangs = () =>
+const getFinalLangs = () =>
 {
     let finalLangs = [];
 
@@ -80,8 +66,7 @@ getFinalLangs = () =>
     };
 
     return finalLangs;
-}; debug ? console.log("getFinalLangs()", getFinalLangs()) : "";
-
+}; 
 
 const getKeysForLang = (lang) =>
 {
@@ -95,7 +80,7 @@ const getKeysForLang = (lang) =>
     return keys;
 }
 
-getQuestsForLang = (langPos) =>
+const getQuestsForLang = (langPos) =>
 {
     let inputs = [];
 
@@ -107,9 +92,7 @@ getQuestsForLang = (langPos) =>
     return inputs.join("");
 };
 
-
-
-drawQuestsAll = () => {
+const drawQuestsAll = () => {
 
     let drawing = [];
     let finalLangsIndex = [];
@@ -128,9 +111,9 @@ drawQuestsAll = () => {
     drawing.pop();
 
     return drawing.join("");
-}; debug ? console.log("drawQuestsAll", drawQuestsAll()) : "";
+};
 
-getChosenSelectorArrayInRange = (start, end) =>
+const getChosenSelectorArrayInRange = (start, end) =>
 {
     templateArray = [];
     selectorArray = [];
@@ -149,11 +132,9 @@ getChosenSelectorArrayInRange = (start, end) =>
     }
 
     return selectorArray;
-}; debug ? console.log("getChosenSelectorArrayInRange(1,2)", getChosenSelectorArrayInRange(1,2)) : "";
+};
 
-chosenSelectorArray = getChosenSelectorArrayInRange(1,2);
-
-drawChecker = () =>
+const drawChecker = () =>
 {
     let height = 25;
     let width = 25;
@@ -175,7 +156,7 @@ drawChecker = () =>
     `
 }
 
-questionTrue = () =>
+const questionTrue = () =>
 {
     points.collected++;
 
@@ -184,7 +165,7 @@ questionTrue = () =>
     `
 }
 
-questionFalse = (key) =>
+const questionFalse = (key) =>
 {
     points.wrong++;
     document.getElementById(key).style.background = wrongAnswerBackground;
@@ -192,7 +173,7 @@ questionFalse = (key) =>
     return db[selector][key];
 }
 
-getPossibleWantedKeys = () => {
+const getPossibleWantedKeys = () => {
 
     let possibleKeys = [];
     for (let key of wantedKeys)
@@ -203,7 +184,7 @@ getPossibleWantedKeys = () => {
     return possibleKeys;
 };
 
-checkAnswer = () =>
+const checkAnswer = () =>
 {
     let localWrongs = 0;
     for (let key of getPossibleWantedKeys()) /* in selected langs ----- !!!!!*/
@@ -233,12 +214,10 @@ checkAnswer = () =>
     local.wrongs = 0;
 };
 
-selectorPlus = () => {
+const selectorPlus = () => {
     arrSelector++;
     drawTest(selector);
 }
-
-
 
 const drawQuestion = (selector) =>
 {
@@ -313,17 +292,16 @@ const drawResults = () =>
     body.innerHTML = `
     
     <div id="body">
-    <div id="main" class="results">
-    <div id="results">
-    <br>
-    Máš ${points.collected} z ${points.collected + points.wrong} bodů!<br>
-    ${Math.floor(100 / ((points.collected + points.wrong) / points.collected))} %
-    <div>
-    ${drawButtonTestAgain()}
-    <br><br>
-    </div> 
-</div>
-
+        <div id="main" class="results">
+            <div id="results">
+            <br>
+            Máš ${points.collected} z ${points.collected + points.wrong} bodů!<br>
+            ${Math.floor(100 / ((points.collected + points.wrong) / points.collected))} %
+            <div>
+        ${drawButtonTestAgain()}
+        <br><br>
+        </div> 
+    </div>
 
     `
     arrSelector = 0;
@@ -335,16 +313,19 @@ const drawResults = () =>
 
 const startTest = () =>
 {
-
     const start = document.getElementById("start").value;
     const end = document.getElementById("end").value;
 
-    if (wantedLangs.length == 0) alert("Nejsou vybrány žádné jazyky!")
-    else if (wantedKeys.length == 0) alert("Nejsou vybrány žádné parametry!")
-    else if (start.trim() == "") alert("Není zadaná hodnota!")
+    debug ? console.log("Start: ", start, "End: ", end) : "";
+
+    if (wantedLangs.length == 0) alert("Nejsou vybrány žádné jazyky!");
+    else if (wantedKeys.length == 0) alert("Nejsou vybrány žádné parametry!");
+    else if (start.trim() == "") alert("Není zadaná hodnota!");
     else if (!(isFinite(start) && isFinite(end))) alert ("Je nutné zadávat pouze čísla!");
-    else if (start > end) alert("První číslo musí být rovno druhému číslu nebo nižší!")
-    else if (end > db.length - 1) alert(`V databázi není víc než ${db.length - 1} položek!`)
+    else if (start > end) alert("První číslo musí být rovno druhému číslu nebo nižší!");
+    else if (start < 1) alert(`Položky začínají od 1, ne od menšího čísla!`);
+    else if (end > db.length - 1) alert(`V databázi není víc než ${db.length - 1} položek!`);
+    else if (!(Number.isInteger(parseFloat(start)) && Number.isInteger(parseFloat(end)))) alert("Je nutné zadávat pouze celá čísla!");
     else {
         chosenSelectorArray = getChosenSelectorArrayInRange(start, end);
 
@@ -357,7 +338,6 @@ const drawTest = () =>
     selector = chosenSelectorArray[arrSelector];
 
     drawQuestion(selector)
-
 }
 
 const drawMenuLangs = () =>
@@ -374,10 +354,7 @@ const drawMenuLangs = () =>
 
 const getDefaultKeysForLangs = () =>
 {
-
     keys = [];
-
-
 
     for (let i = 0; i < wantedLangs.length; i++)
     {
@@ -439,6 +416,8 @@ const addKeyForTest = (key) =>
     };
 
     wantedKeys = temporary;
+
+    debug ? console.log("AddKeyForTest", wantedKeys) : "";
 }
 
 const addLangForTest = (lang) =>
