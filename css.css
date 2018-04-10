@@ -46,6 +46,10 @@ small {
     font-size: 15px;
 }
 
+smaller {
+    font-size: 8px;
+}
+
 input {
     margin-top: 10px;
     margin-bottom: 5px;
@@ -86,6 +90,7 @@ input {
 }
 
 button {
+    transform: 1s;
     color: greenyellow;
     border-radius: 5px;
     background-color: darkgreen;

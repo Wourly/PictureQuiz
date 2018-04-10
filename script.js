@@ -1,4 +1,4 @@
-debug = true;
+debug = false;
 
 /* setting title */
 document.querySelector("title").innerHTML = title;
@@ -208,7 +208,7 @@ checkAnswer = () =>
     let localWrongs = 0;
     for (let key of getPossibleWantedKeys()) /* in selected langs ----- !!!!!*/
     {
-        document.getElementById(`answer${key}`).innerHTML = db[selector][key].toLowerCase() == document.getElementById(key).value.toLowerCase() ?
+        document.getElementById(`answer${key}`).innerHTML = db[selector][key].toLowerCase() == document.getElementById(key).value.trim().toLowerCase() ?
         questionTrue() : questionFalse(key);
     }
 
@@ -247,8 +247,8 @@ body.innerHTML = `
 <div id="body">
 
     <div id="main">
-        <img id="mainImg" src="db/${db[selector].src}" width="100%">
-
+        <img id="mainImg" src="db/${db[selector].src}" width="100%"><br>
+        <smaller>${db[selector].from}</smaller>
         <div id="mainInputs">
         ${drawQuestsAll()}
         </div>
@@ -316,7 +316,8 @@ const drawResults = () =>
     <div id="main" class="results">
     <div id="results">
     <br>
-    Máš ${points.collected} z ${points.collected + points.wrong} bodů!
+    Máš ${points.collected} z ${points.collected + points.wrong} bodů!<br>
+    ${Math.floor(100 / ((points.collected + points.wrong) / points.collected))} %
     <div>
     ${drawButtonTestAgain()}
     <br><br>
@@ -341,7 +342,7 @@ const startTest = () =>
     if (wantedLangs.length == 0) alert("Nejsou vybrány žádné jazyky!")
     else if (wantedKeys.length == 0) alert("Nejsou vybrány žádné parametry!")
     else if (start.trim() == "") alert("Není zadaná hodnota!")
-    else if ((isNaN(start.trim()) && isNaN(end.trim()))) alert ("Je nutné zadávat pouze čísla!");
+    else if (!(isFinite(start) && isFinite(end))) alert ("Je nutné zadávat pouze čísla!");
     else if (start > end) alert("První číslo musí být rovno druhému číslu nebo nižší!")
     else if (end > db.length - 1) alert(`V databázi není víc než ${db.length - 1} položek!`)
     else {
@@ -505,6 +506,7 @@ const drawMenu = () =>
 
             <div id="menuImageShowcase">
                 <img id="mainImg" src="db/${db[randomMenuSelector].src}" width="100%">
+                <smaller>${db[randomMenuSelector].from}</smaller><br>
                 ${db[randomMenuSelector].item}
             </div>
 
@@ -523,7 +525,7 @@ const drawMenu = () =>
             <br><br>
             <button onclick="startTest()">Start test!</button>
             <br><br>
-
+            <small>Před začátkem testu si aktualizujte stránku, pokud jste již test používali! (F5 u většiny prohlížečů)!</small>
         </div> 
 
         <div id="names"><div>
