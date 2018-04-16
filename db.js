@@ -707,23 +707,42 @@ from: `Forest & Kim Starr @ biolib.cz`
 },
 /* 55 NEXT */
 {
-    item: "Tillandsia caput-medusae",
-        
-    rod: "Tilandsie",
-    druh: "Provazovkovitá",
-        
-    genus: "Tillandsia",
-    specio: "Usneoides",
-        
-    src: `tillandsia_usneoides.jpg`,
-    from: `Forest & Kim Starr @ biolib.cz` 
-    },
-
-
-
-
-
-
-
+item: "Vriesa splendens",
+    
+rod_nenalezen: "",
+druh_nenalezen: "",
+    
+genus: "Vriesa",
+specio: "Splendens",
+    
+src: `vriesea_splendens.jpg`,
+from: `Forest & Kim Starr @ biolib.cz` 
+},
+/* 56 NEXT */
+{
+item: "Zamioculcas zamiifolia",
+    
+rod: "Kulkas",
+druh: "Zamiolistý",
+    
+genus: "Zamioculcas",
+specio: "Zamiifolia",
+    
+src: `zamioculcas_zamiifolia.jpg`,
+from: `Šárka Mašová @ biolib.cz` 
+},
+/* 57 NEXT */
+{
+item: "Zamioculcas aethiopica",
+    
+rod: "Kornoutovka",
+druh: "Africká",
+    
+genus: "Zantedeschia ",
+specio: "Aethiopica",
+    
+src: `zanthedesia_aethiopica.jpg`,
+from: `Šárka Mašová @ biolib.cz` 
+},
 /* DO NOT REMOVE THAT, OR ADD ANY ITEMS BEYOND: */
 ]
