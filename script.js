@@ -288,20 +288,19 @@ const drawButtonTestAgain = () =>
 
 const drawResults = () =>
 {
-
     body.innerHTML = `
     
     <div id="body">
-        <div id="main" class="results">
-            <div id="results">
-            <br>
-            Máš ${points.collected} z ${points.collected + points.wrong} bodů!<br>
-            ${Math.floor(100 / ((points.collected + points.wrong) / points.collected))} %
-            <div>
-        ${drawButtonTestAgain()}
-        <br><br>
-        </div> 
-    </div>
+    <div id="main" class="results">
+    <div id="results">
+    <br>
+    Máš ${points.collected} z ${points.collected + points.wrong} bodů!<br>
+    ${Math.floor(100 / ((points.collected + points.wrong) / points.collected))} %
+    <div>
+    ${drawButtonTestAgain()}
+    <br><br>
+    </div> 
+</div>
 
     `
     arrSelector = 0;
@@ -313,6 +312,7 @@ const drawResults = () =>
 
 const startTest = () =>
 {
+
     const start = document.getElementById("start").value;
     const end = document.getElementById("end").value;
 
@@ -322,12 +322,12 @@ const startTest = () =>
     else if (wantedKeys.length == 0) alert("Nejsou vybrány žádné parametry!");
     else if (start.trim() == "") alert("Není zadaná hodnota!");
     else if (!(isFinite(start) && isFinite(end))) alert ("Je nutné zadávat pouze čísla!");
-    else if (start > end) alert("První číslo musí být rovno druhému číslu nebo nižší!");
+    else if (parseFloat(start) > parseFloat(end)) alert("První číslo musí být rovno druhému číslu nebo nižší!");
     else if (start < 1) alert(`Položky začínají od 1, ne od menšího čísla!`);
     else if (end > db.length - 1) alert(`V databázi není víc než ${db.length - 1} položek!`);
     else if (!(Number.isInteger(parseFloat(start)) && Number.isInteger(parseFloat(end)))) alert("Je nutné zadávat pouze celá čísla!");
     else {
-        chosenSelectorArray = getChosenSelectorArrayInRange(start, end);
+        chosenSelectorArray = getChosenSelectorArrayInRange(parseInt(start), parseInt(end));
 
         setPage("test");
     }
@@ -499,6 +499,8 @@ const drawMenu = () =>
             <br>
             <small>
             Položky budou náhodně promíchané.
+            <br><br>
+            Mezi jednotlivými vstupy se lze přesouvat pomocí tabulátoru (TAB), jímž se lze dostat i na tlačítko a pak zmáčknout "ENTER".
             <br><br>
             Pokud položka nemá chtěný parametr, nebude parametr v testu požadován...</small></i>
             <br><br>
