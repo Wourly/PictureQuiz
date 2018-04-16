@@ -455,7 +455,7 @@ druh_nenalezen: "",
 genus: "Peperomia",
 specio: "Boivinii",
     
-src: `peperomia_boivinii`,
+src: `peperomia_boivinii.jpg`,
 from: `Petr Vobořil @ biolib.cz` 
 },
 /* 36 NEXT */
@@ -494,7 +494,7 @@ druh_nenalezen: "",
 genus: "Pachypodium",
 specio: "Geayi",
     
-src: `pachypodium_geayi.jgp`,
+src: `pachypodium_geayi.jpg`,
 from: `Milan Kořínek @ biolib.cz` 
 },
 /* 39 NEXT */
@@ -546,7 +546,7 @@ druh: "Vznešený",
 genus: "Phalaenopsis",
 specio: "Amabilis",
     
-src: `pelargonium_amabilis.jpg`,
+src: `phalaenopsis_amabilis.jpg`,
 from: `Petr Kocna @ biolib.cz` 
 },
 /* 43 NEXT */
@@ -741,7 +741,7 @@ druh: "Africká",
 genus: "Zantedeschia ",
 specio: "Aethiopica",
     
-src: `zanthedesia_aethiopica.jpg`,
+src: `zanthedeschia_aethiopica.jpg`,
 from: `Šárka Mašová @ biolib.cz` 
 },
 /* DO NOT REMOVE THAT, OR ADD ANY ITEMS BEYOND: */
