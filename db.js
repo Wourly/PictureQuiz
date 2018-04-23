@@ -436,7 +436,7 @@ from: `Ivo Antušek @ biolib.cz`
 {
 item: "Nephrolepis cordifolia",
     
-rod: "Ledvinník",
+rod: "Ledviník",
 druh_nenalezen: "",
     
 genus: "Nephrolepis",
@@ -510,19 +510,7 @@ specio: "Peltatum",
 src: `pelargonium_peltatum.jpg`,
 from: `Petr Kocna @ biolib.cz` 
 },
-/* 40 NEXT */
-{
-item: "Pelargonium zonale",
-    
-rod: "Pelargonie",
-druh: "Páskatá",
-    
-genus: "Pelargonium",
-specio: "Zonale",
-    
-src: `pelargonium_zonale.jpg`,
-from: `Petr Kocna @ biolib.cz` 
-},
+
 /* 41 NEXT */
 {
 item: "Pelargonium zonale",
@@ -567,7 +555,7 @@ from: `gardners-eshop.cz`
 item: "Platycerium bifurcatum",
     
 rod: "Parožnatka",
-druh: "Vidličtnatá",
+druh: "Vidličnatá",
     
 genus: "Platycerium",
 specio: "Bifurcatum",
@@ -660,7 +648,7 @@ item: "Spathiphyllum",
 rod: "Lopatkovec",
 druh_nenalezen: "",
     
-genus: "Scindapsus",
+genus: "Spathiphyllum",
 specio_nenalezen: "",
     
 src: `spathiphyllum.jpg`,
@@ -733,12 +721,12 @@ from: `Šárka Mašová @ biolib.cz`
 },
 /* 57 NEXT */
 {
-item: "Zamioculcas aethiopica",
+item: "Zantedeschia aethiopica",
     
 rod: "Kornoutovka",
 druh: "Africká",
     
-genus: "Zantedeschia ",
+genus: "Zantedeschia",
 specio: "Aethiopica",
     
 src: `zanthedeschia_aethiopica.jpg`,

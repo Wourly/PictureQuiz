@@ -494,19 +494,19 @@ const drawMenu = () =>
             Položky:<br>
             <input value="1" id="start" class="menuInput"></input><br>
             <small>až</small><br>
-            <input value="${db.length - 1}" id="end" class="menuInput"></input><br>
-            <i>min 1, max ${db.length - 1}<br>
-            <br>
-            <small>
-            Položky budou náhodně promíchané.
-            <br><br>
-            Mezi jednotlivými vstupy se lze přesouvat pomocí tabulátoru (TAB), jímž se lze dostat i na tlačítko a pak zmáčknout "ENTER".
-            <br><br>
-            Pokud položka nemá chtěný parametr, nebude parametr v testu požadován...</small></i>
+            <input value="${db.length - 1}" id="end" class="menuInput"></input>
             <br><br>
             <button onclick="startTest()">Start test!</button>
             <br><br>
-            <small>Před začátkem testu si aktualizujte stránku, pokud jste již test používali! (F5 u většiny prohlížečů)!</small>
+            <i>min 1, max ${db.length - 1}</i>
+            <br>
+            <br>
+            Mezi položkami se lze přesouvat pomocí TAB - pokud takto označíte tlačítko, lze použít ENTER.
+            <br>
+            <br>
+            Položky jsou při prvním pokusu náhodně promíchané.
+
+
         </div> 
 
         <div id="names"><div>
